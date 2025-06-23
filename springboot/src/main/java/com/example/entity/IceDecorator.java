@@ -1,6 +1,8 @@
 package com.example.entity;
 
 
+import com.example.interfaces.Beverage;
+
 public class IceDecorator extends Decorator {
     public IceDecorator(Beverage beverage) {
         super(beverage);

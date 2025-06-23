@@ -7,8 +7,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123
-    url: jdbc:mysql://localhost:3306/drinksystem?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/vendingmachine?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
 

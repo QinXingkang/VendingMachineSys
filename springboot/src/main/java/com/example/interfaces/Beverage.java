@@ -1,4 +1,4 @@
-package com.example.entity;
+package com.example.interfaces;
 
 public interface Beverage {
     String description = "Unknown Beverage.";

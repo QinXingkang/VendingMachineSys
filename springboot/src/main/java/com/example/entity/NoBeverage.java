@@ -1,5 +1,7 @@
 package com.example.entity;
 
+import com.example.interfaces.Beverage;
+
 /**
  * @author : QXK
  * @date : 2025-06-23 15:59

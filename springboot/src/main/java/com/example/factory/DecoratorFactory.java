@@ -1,8 +1,8 @@
 package com.example.factory;
 
 
-import com.example.entity.Beverage;
-import com.example.entity.Factory;
+import com.example.interfaces.Beverage;
+import com.example.interfaces.Factory;
 import com.example.entity.IceDecorator;
 import com.example.entity.MilkDecorator;
 import com.example.entity.NoDecorator;

@@ -1,6 +1,7 @@
 package com.example.entity;
 
 
+import com.example.interfaces.Beverage;
 
 public abstract class Decorator implements Beverage {
     protected Beverage beverage;
