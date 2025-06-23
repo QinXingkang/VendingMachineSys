@@ -11,6 +11,11 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+# 优雅的操作数据库而不用写SQL
+  #使用步骤
+  #定义实体类（使用注解映射到表）
+  #定义接口（继承 JpaRepository）
+  #就可以直接调用方法来做：增删改查，不写 SQL！
   jpa:
     hibernate:
       ddl-auto: update

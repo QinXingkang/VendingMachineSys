@@ -9,23 +9,62 @@ import java.util.List;
  * @date : 2025-06-24 0:26
  * @description :
  */
+
+/**
+ * 1.数据库orders表的订单id与orders_seq中的next_val对不上，且next_val变化很大的原因
+ *  这是JPA使用的序列生成策略的正常行为，背后是出于性能优化的考虑
+ *  Hibernate通常会使用一种 "hi/lo" 或者 pooled（池化）策略来预取 ID 值段
+ *  等预取的一段用完了再更新一次orders_seq中的next_val
+ */
 @Entity
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
+
+    // 关联饮料实体（一个订单只对应一个饮料）
+    @ManyToOne
+    @JoinColumn(name = "beverage_id")
+    private BeverageItem beverage;
 
     private String beverageName;
 
-    @ElementCollection
-    @CollectionTable(name = "order_decorators", joinColumns = @JoinColumn(name = "order_id"))
-    @Column(name = "decorator")
-    private List<String> decorators;
+    //配料ids
+    private String decoratorIds;
+
+    //配料名
+    private String decoratorNames;
 
     private Double totalCost;
 
+    private String description;
+
     //getter、setter
+
+    public String getDecoratorIds() {
+        return decoratorIds;
+    }
+
+    public void setDecoratorIds(String decoratorIds) {
+        this.decoratorIds = decoratorIds;
+    }
+
+    public String getDecoratorNames() {
+        return decoratorNames;
+    }
+
+    public void setDecoratorNames(String decoratorNames) {
+        this.decoratorNames = decoratorNames;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public Long getId() {
         return id;
@@ -35,20 +74,12 @@ public class Order {
         this.id = id;
     }
 
-    public String getBeverageName() {
-        return beverageName;
+    public BeverageItem getBeverage() {
+        return beverage;
     }
 
-    public void setBeverageName(String beverageName) {
-        this.beverageName = beverageName;
-    }
-
-    public List<String> getDecorators() {
-        return decorators;
-    }
-
-    public void setDecorators(List<String> decorators) {
-        this.decorators = decorators;
+    public void setBeverage(BeverageItem beverage) {
+        this.beverage = beverage;
     }
 
     public Double getTotalCost() {
@@ -57,5 +88,13 @@ public class Order {
 
     public void setTotalCost(Double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public String getBeverageName() {
+        return beverageName;
+    }
+
+    public void setBeverageName(String beverageName) {
+        this.beverageName = beverageName;
     }
 }

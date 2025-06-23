@@ -1,15 +1,16 @@
 package com.example.controller;
 
+import com.example.entity.DecoratorItem;
 import com.example.entity.Order;
-import com.example.interfaces.Beverage;
 
-import com.example.service.ShopService;
+import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author : QXK
@@ -23,20 +24,24 @@ import java.util.Map;
 public class OrderController {
 
     @Autowired
-    private ShopService shopService;
+    private OrderService orderService;
 
     @PostMapping
-    public Map<String, Object> processOrder(@RequestBody Map<String, Object> request) {
-        String beverageName = (String) request.get("beverage");
-        String[] decorators = ((List<String>) request.get("decorators"))
-                .toArray(new String[0]);
+    public Map<String, Object> placeOrder(@RequestBody Map<String, Object> request) {
+        String beverage = (String) request.get("beverage");
+        List<String> decorators = (List<String>) request.get("decorators");
 
-        Order order = shopService.processOrder(beverageName,decorators);
+        Order savedOrder = orderService.processOrder(beverage, decorators);
+
 
         Map<String, Object> response = new HashMap<>();
-        response.put("orderId", order.getId());
-        response.put("description", beverageName + " + " + String.join(", ", order.getDecorators()));
-        response.put("cost", order.getTotalCost());
+        response.put("orderId", savedOrder.getId());
+        response.put("beverageId", savedOrder.getBeverage());
+        response.put("beverageName", savedOrder.getBeverage().getName());
+        response.put("decoratorIds", savedOrder.getDecoratorIds());
+        response.put("decoratorNames", savedOrder.getDecoratorNames());
+        response.put("totalCost", savedOrder.getTotalCost());
+        response.put("description", savedOrder.getDescription());
         return response;
     }
 }

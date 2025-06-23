@@ -9,7 +9,4 @@ public abstract class Decorator implements Beverage {
     public Decorator(Beverage beverage) {
         this.beverage = beverage;
     }
-
-    public Decorator() {
-    }
 }
