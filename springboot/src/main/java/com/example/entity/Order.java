@@ -40,6 +40,9 @@ public class Order {
 
     private String description;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDecoratorDetail> decoratorDetails;
+
     //getter、setter
 
     public String getDecoratorIds() {
@@ -96,5 +99,13 @@ public class Order {
 
     public void setBeverageName(String beverageName) {
         this.beverageName = beverageName;
+    }
+
+    public List<OrderDecoratorDetail> getDecoratorDetails() {
+        return decoratorDetails;
+    }
+
+    public void setDecoratorDetails(List<OrderDecoratorDetail> decoratorDetails) {
+        this.decoratorDetails = decoratorDetails;
     }
 }
