@@ -51,11 +51,14 @@ const submitOrder = async () => {
   }
   try {
     const res = await axios.post('http://localhost:9090/order', payload)
-    orderResult.value = res.data
-    result.value = res.data
-    ElMessage.success('订单提交成功！')
+    if (res.data.code === 200) {
+      result.value = res.data.data
+      ElMessage.success('订单提交成功！')
+    } else {
+      ElMessage.error(res.data.message || '订单提交失败')
+    }
   } catch (err) {
-    alert('订单提交失败：' + err.response?.data?.message || err.message)
+    ElMessage.error('请求失败：' + (err.response?.data?.message || err.message))
   }
 }
 </script>

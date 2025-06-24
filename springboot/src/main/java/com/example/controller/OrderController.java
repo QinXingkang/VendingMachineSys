@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import com.example.common.Result;
+import com.example.common.enums.ResultCode;
 import com.example.entity.DecoratorItem;
 import com.example.entity.Order;
 
@@ -27,21 +29,29 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping
-    public Map<String, Object> placeOrder(@RequestBody Map<String, Object> request) {
-        String beverage = (String) request.get("beverage");
-        List<String> decorators = (List<String>) request.get("decorators");
+    public Result<Map<String, Object>> placeOrder(@RequestBody Map<String, Object> request) {
+        try {
+            String beverage = (String) request.get("beverage");
+            List<String> decorators = (List<String>) request.get("decorators");
 
-        Order savedOrder = orderService.processOrder(beverage, decorators);
+            Order savedOrder = orderService.processOrder(beverage, decorators);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("orderId", savedOrder.getId());
+            response.put("beverageId", savedOrder.getBeverage());
+            response.put("beverageName", savedOrder.getBeverage().getName());
+            response.put("decoratorIds", savedOrder.getDecoratorIds());
+            response.put("decoratorNames", savedOrder.getDecoratorNames());
+            response.put("totalCost", savedOrder.getTotalCost());
+            response.put("description", savedOrder.getDescription());
+
+            return Result.success(response);
+        }catch (IllegalArgumentException e){
+            return Result.fail(ResultCode.BAD_REQUEST);
+        }catch (Exception e){
+            return Result.fail(ResultCode.INTERNAL_ERROR);
+        }
 
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("orderId", savedOrder.getId());
-        response.put("beverageId", savedOrder.getBeverage());
-        response.put("beverageName", savedOrder.getBeverage().getName());
-        response.put("decoratorIds", savedOrder.getDecoratorIds());
-        response.put("decoratorNames", savedOrder.getDecoratorNames());
-        response.put("totalCost", savedOrder.getTotalCost());
-        response.put("description", savedOrder.getDescription());
-        return response;
     }
 }
