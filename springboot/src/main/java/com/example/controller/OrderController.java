@@ -73,7 +73,15 @@ public class OrderController {
         }catch (Exception e){
             return Result.fail(ResultCode.INTERNAL_ERROR);
         }
+    }
 
-
+    @GetMapping("/history")
+    public Result<List<Order>> getAllOrders() {
+        try {
+            List<Order> orders = orderService.getAllOrders(); // 你需要在 service 中实现
+            return Result.success(orders);
+        } catch (Exception e) {
+            return Result.fail(ResultCode.INTERNAL_ERROR);
+        }
     }
 }

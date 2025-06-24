@@ -1,25 +1,11 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-header>
+      <el-card class="section-card button-card" shadow="hover">
+        <h2>欢迎使用售货机</h2>
+      </el-card>
 
-          <el-tabs
-              v-model="activeTab"
-              type="card"
-              class="custom-tabs"
-              @tab-click="handleTabClick"
-          >
-            <el-tab-pane label="售货页面" name="orderPage" />
-            <el-tab-pane label="订单页面" name="orderHistory" />
-          </el-tabs>
-
-      </el-header>
       <el-main >
-
-        <el-card class="section-card button-card" shadow="hover">
-          <h2>欢迎使用售货机</h2>
-        </el-card>
-
         <!-- 选择饮料和配料 -->
         <el-card class="section-card form-card" shadow="hover">
           <el-form @submit.prevent="submitOrder">
@@ -87,17 +73,6 @@ import { ref } from 'vue'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const handleTabClick = (tab) => {
-  if (tab.props.name === 'orderPage') {
-    router.push('/order')
-  } else if (tab.props.name === 'orderHistory') {
-    router.push('/history')
-  }
-}
 
 
 const selectedBeverage = ref('')
@@ -141,8 +116,6 @@ const submitOrder = async () => {
 }
 </script>
 
-
-
 <style scoped>
 
 .common-layout {
@@ -157,26 +130,6 @@ const submitOrder = async () => {
   color: #333;
   margin: 0;
 }
-
-:deep(.el-tabs--card > .el-tabs__header .el-tabs__item) {
-  border: none !important;         /* 移除每个 tab 的边框 */
-  margin-right: 8px;               /* 控制标签间距 */
-  background-color: #05efca;       /* 设置非激活状态颜色 */
-  border-radius: 8px;
-  background-color: #9ecaf6;
-
-}
-
-:deep(.el-tabs--card > .el-tabs__header .el-tabs__item.is-active) {
-  background-color: #409EFF;       /* 激活状态背景色 */
-  color: white;
-}
-
-:deep(.el-tabs--card > .el-tabs__header .el-tabs__nav) {
-  border: none !important;         /* 移除整个 tab header 的边框 */
-}
-
-
 
 .decorator-item {
   display: flex;

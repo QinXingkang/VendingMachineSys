@@ -87,5 +87,9 @@ public class OrderService {
         return order;
     }
 
+    public List<Order> getAllOrders() {
+        return orderRepo.findAll(); // 如果你是用 JPA / MyBatis，可以自定义
+    }
+
 
 }
