@@ -40,25 +40,26 @@
             </el-form-item>
 
             <el-form-item label="请选择配料及份数">
-              <div
-                  v-for="decorator in decoratorsList"
-                  :key="decorator"
-                  class="decorator-item"
-              >
-                <el-checkbox
-                    v-model="selectedDecorators"
-                    :label="decorator"
+              <div class="decorator-list">
+                <div
+                    v-for="decorator in decoratorsList"
+                    :key="decorator"
+                    class="decorator-item"
                 >
-                  {{ decorator }}
-                </el-checkbox>
-                <el-input-number
-                    v-model="decoratorCounts[decorator]"
-                    :min="1"
-                    :disabled="!selectedDecorators.includes(decorator)"
-                    size="small"
-                    class="quantity-input"
-                    style="margin-left: 100px;"
-                />
+                  <el-checkbox
+                      v-model="selectedDecorators"
+                      :label="decorator"
+                  >
+                    {{ decorator }}
+                  </el-checkbox>
+                  <el-input-number
+                      v-model="decoratorCounts[decorator]"
+                      :min="1"
+                      :disabled="!selectedDecorators.includes(decorator)"
+                      size="small"
+                      class="quantity-input"
+                  />
+                </div>
               </div>
             </el-form-item>
           </el-form>

@@ -30,37 +30,39 @@
           <el-form @submit.prevent="submitOrder">
             <el-form-item label="请选择饮料">
               <el-radio-group v-model="selectedBeverage">
-                <el-radio label="Coca" class="radio-with-img">
+                <el-radio label="Coca" >
                   <span class="radio-label-text">Coca</span>
                 </el-radio>
-                <el-radio label="Coffee" class="radio-with-img">
+                <el-radio label="Coffee" >
                   <span class="radio-label-text">Coffee</span>
                 </el-radio>
               </el-radio-group>
             </el-form-item>
 
             <el-form-item label="请选择配料及份数">
-              <div
-                  v-for="decorator in decoratorsList"
-                  :key="decorator"
-                  class="decorator-item"
-              >
-                <el-checkbox
-                    v-model="selectedDecorators"
-                    :label="decorator"
+              <div class="decorator-list">
+                <div
+                    v-for="decorator in decoratorsList"
+                    :key="decorator"
+                    class="decorator-item"
                 >
-                  {{ decorator }}
-                </el-checkbox>
-                <el-input-number
-                    v-model="decoratorCounts[decorator]"
-                    :min="1"
-                    :disabled="!selectedDecorators.includes(decorator)"
-                    size="small"
-                    class="quantity-input"
-                    style="margin-left: 100px;"
-                />
+                  <el-checkbox
+                      v-model="selectedDecorators"
+                      :label="decorator"
+                  >
+                    {{ decorator }}
+                  </el-checkbox>
+                  <el-input-number
+                      v-model="decoratorCounts[decorator]"
+                      :min="1"
+                      :disabled="!selectedDecorators.includes(decorator)"
+                      size="small"
+                      class="quantity-input"
+                  />
+                </div>
               </div>
             </el-form-item>
+
           </el-form>
         </el-card>
 
