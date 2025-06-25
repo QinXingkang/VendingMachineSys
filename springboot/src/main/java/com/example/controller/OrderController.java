@@ -5,6 +5,8 @@ import com.example.common.enums.ResultCode;
 import com.example.entity.DecoratorItem;
 import com.example.entity.Order;
 
+import com.example.interfaces.BeverageItemRepository;
+import com.example.interfaces.DecoratorItemRepository;
 import com.example.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,12 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private BeverageItemRepository beverageRepo; //用于查询和操作
+
+    @Autowired
+    private DecoratorItemRepository decoratorRepo; //用于查询和操作
 
     @PostMapping
     public Result<Map<String, Object>> placeOrder(@RequestBody Map<String, Object> request) {
@@ -84,4 +92,5 @@ public class OrderController {
             return Result.fail(ResultCode.INTERNAL_ERROR);
         }
     }
+
 }

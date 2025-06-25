@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface DecoratorItemRepository extends JpaRepository<DecoratorItem, Integer> {
     List<DecoratorItem> findByNameIn(List<String> names);
+
 }

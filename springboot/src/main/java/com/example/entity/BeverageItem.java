@@ -19,6 +19,7 @@ public class BeverageItem {
 
     private String name;
     private Double price;
+//    private Long stock;
 
     public Long getId() {
         return id;
@@ -43,4 +44,12 @@ public class BeverageItem {
     public void setPrice(Double price) {
         this.price = price;
     }
+//
+//    public Long getStock() {
+//        return stock;
+//    }
+//
+//    public void setStock(Long stock) {
+//        this.stock = stock;
+//    }
 }

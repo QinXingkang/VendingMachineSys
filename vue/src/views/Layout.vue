@@ -12,7 +12,7 @@
       </el-tabs>
     </el-header>
     <el-main>
-      <router-view /> <!-- 子页面内容将自动插入这里 -->
+      <router-view :key="route.fullPath" />
     </el-main>
   </el-container>
 </template>
@@ -27,14 +27,21 @@ const activeTab = ref(route.name)
 
 const handleTabClick = (tab) => {
   router.push({ name: tab.props.name })
+      .then(() => {
+    if (tab.props.name === 'orderPage') {
+      // 强制刷新整个页面（浏览器刷新）
+      window.location.reload()
+    }
+  })
 }
 
 // 当 URL 改变时自动更新 activeTab
 watch(() => route.name, (newName) => {
   activeTab.value = newName
 })
+
 </script>
 
-<style scope>
+<style scoped>
 
 </style>

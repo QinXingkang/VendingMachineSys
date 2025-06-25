@@ -2,8 +2,27 @@
   <div class="common-layout">
     <el-container>
       <el-card class="section-card button-card" shadow="hover">
-        <h2>欢迎使用售货机</h2>
+        <div class="welcome-text">欢迎使用售货机</div>
+        <!-- 通知框 -->
+        <el-alert
+            title="今日饮品及配料价格表"
+            type="info"
+            show-icon
+            :closable="false"
+            style="margin-top: 10px;"
+        />
+        <div class="card" style="margin-top: 10px">
+          <el-table stripe :data="data.beverageTable">
+            <el-table-column prop="beverageName" label="饮品名称" />
+            <el-table-column prop="beveragePrice" label="饮品价格" />
+          </el-table>
+          <el-table stripe :data="data.decoratorTable ">
+            <el-table-column prop="decoratorName" label="配料名称" />
+            <el-table-column prop="decoratorPrice" label="配料价格" />
+          </el-table>
+        </div>
       </el-card>
+
 
       <el-main >
         <!-- 选择饮料和配料 -->
@@ -68,17 +87,57 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref , reactive, onMounted} from 'vue'
 
-import axios from 'axios'
+const data = reactive({
+  formVisible: false,
+  tableData: [],
+  decoratorTable: []
+})
+const load = () => {
+  axios.get('http://localhost:9090/message/detail')
+      .then(res => {
+        if (res.data.code === 200) {
+          const responseData = res.data.data
+
+          // 处理饮品数据
+          const beverageList = responseData?.beverages || []
+          data.beverageTable = beverageList.map(item => ({
+            beverageName: item.name,
+            beveragePrice: item.price,
+          }))
+
+          // 处理配料数据
+          const decoratorList = responseData?.decorators || []
+          data.decoratorTable = decoratorList.map(item => ({
+            decoratorName: item.name,
+            decoratorPrice: item.price,
+          }))
+        } else {
+          ElMessage.error(res.data.msg || '加载失败')
+        }
+      })
+      .catch(err => {
+        console.error('加载饮品失败', err)
+      })
+}
+onMounted(() => {
+  load()
+})
+
+
+import { useRoute } from 'vue-router'
+const route = useRoute()
+
+import axios, {Axios} from 'axios'
 import { ElMessage } from 'element-plus'
-
-
 
 const selectedBeverage = ref('')
 const selectedDecorators = ref([])
 const result = ref({})
 const dialogVisible = ref(false) // 控制对话框显示
+
+
 
 const decoratorsList = ['Milk', 'Ice']
 const decoratorCounts = ref({
@@ -114,9 +173,21 @@ const submitOrder = async () => {
     ElMessage.error('请求失败：' + (err.response?.data?.message || err.message))
   }
 }
+
+
 </script>
 
 <style scoped>
+
+.welcome-text {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: '微软雅黑', 'Microsoft YaHei', Arial, sans-serif;
+  color: #1890ff;
+  letter-spacing: 2px;
+  user-select: none;
+}
 
 .common-layout {
   background-color: #e6f7ff;
@@ -124,21 +195,18 @@ const submitOrder = async () => {
   padding: 20px 0;
 }
 
-.header-content h2 {
-  font-size: 32px;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
-}
-
 .decorator-item {
   display: flex;
   align-items: center;
-  gap: 20px; /* 复选框与数字输入框间水平间距 */
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 10px;
 }
 
 .quantity-input {
-  margin-left: 0 !important; /* 取消内联大间距 */
+  margin-left: auto;
+  margin-right: 10px;
+  width: 100px;
 }
 
 .radio-with-img {
@@ -157,23 +225,10 @@ const submitOrder = async () => {
   background-color: #c7daed;
 }
 
-
 .button-card {
   display: flex;
   justify-content: center;
   background-color: #c7daed;
 }
 
-.decorator-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.quantity-input {
-  margin-left: auto;
-  margin-right: 10px;
-  width: 100px;
-}
 </style>

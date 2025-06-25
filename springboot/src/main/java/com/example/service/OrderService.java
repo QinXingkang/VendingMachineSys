@@ -1,9 +1,6 @@
 package com.example.service;
 
-import com.example.entity.BeverageItem;
-import com.example.entity.DecoratorItem;
-import com.example.entity.Order;
-import com.example.entity.OrderDecoratorDetail;
+import com.example.entity.*;
 import com.example.factory.BeverageFactory;
 import com.example.factory.DecoratorFactory;
 import com.example.interfaces.*;
@@ -34,7 +31,7 @@ public class OrderService {
     public Order processOrder(String beverageName, Map<String, Integer> decoratorQuantities) {
         // 查询饮料
         BeverageItem beverage = beverageRepo.findByName(beverageName);
-        if (beverage == null) {
+        if (beverage.getName() == null) {
             throw new IllegalArgumentException("饮料名称不存在: " + beverageName);
         }
 
