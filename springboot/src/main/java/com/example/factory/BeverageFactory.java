@@ -1,10 +1,9 @@
 package com.example.factory;
 
-import com.example.interfaces.Beverage;
-import com.example.entity.Coca;
-import com.example.entity.Coffee;
+import com.example.domain.Beverage;
+import com.example.domain.Coca;
+import com.example.domain.Coffee;
 import com.example.interfaces.Factory;
-import com.example.entity.NoBeverage;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,12 +14,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class BeverageFactory implements Factory {
     public static Beverage createBeverage(String name) {
-        if ("Coca".equalsIgnoreCase(name)) {
-            return new Coca();
-        } else if ("Coffee".equalsIgnoreCase(name)) {
-            return new Coffee();
-        } else {
-            return new NoBeverage();
-        }
+        return switch (name.toLowerCase()) {
+            case "coca" -> new Coca();
+            case "coffee" -> new Coffee();
+            default -> throw new IllegalArgumentException("不支持的饮品类型: " + name);
+        };
     }
+
 }

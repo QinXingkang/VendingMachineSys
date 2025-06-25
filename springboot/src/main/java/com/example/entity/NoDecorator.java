@@ -1,6 +1,7 @@
 package com.example.entity;
 
-import com.example.interfaces.Beverage;
+import com.example.domain.Beverage;
+import com.example.domain.Decorator;
 
 /**
  * @author : QXK
@@ -18,5 +19,10 @@ public class NoDecorator extends Decorator {
 
     public NoDecorator(Beverage beverage) {
         super(beverage);
+    }
+
+    @Override
+    public double cost() {
+        return 0;
     }
 }

@@ -11,7 +11,8 @@ public enum ResultCode {
     NOT_FOUND(404, "资源未找到"),
     VALIDATION_FAIL(422, "参数校验失败"),
     ORDER_SAVE_FAIL(430, "订单保存失败"),
-    INTERNAL_ERROR(500, "服务器内部错误");
+    INTERNAL_ERROR(500, "服务器内部错误"),
+    PLACE_ORDER_FAILED(600,"下单失败");
 
     private final int code;
     private final String message;

@@ -1,7 +1,5 @@
-package com.example.entity;
+package com.example.domain;
 
-
-import com.example.interfaces.Beverage;
 
 public class MilkDecorator extends Decorator {
     public MilkDecorator(Beverage beverage) {
@@ -14,7 +12,7 @@ public class MilkDecorator extends Decorator {
     }
 
     @Override
-    public double getCost() {
-        return beverage.getCost() + 1.0;
+    public double cost() {
+        return beverage.cost() + 1.0;
     }
 }

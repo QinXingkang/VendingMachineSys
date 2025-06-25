@@ -7,7 +7,7 @@
           class="custom-tabs"
           @tab-click="handleTabClick"
       >
-        <el-tab-pane label="售货页面" name="orderPage" />
+        <el-tab-pane label="售货页面" name="orderFront" />
         <el-tab-pane label="订单页面" name="orderHistory" />
       </el-tabs>
     </el-header>
@@ -28,7 +28,7 @@ const activeTab = ref(route.name)
 const handleTabClick = (tab) => {
   router.push({ name: tab.props.name })
       .then(() => {
-    if (tab.props.name === 'orderPage') {
+    if (tab.props.name === 'orderFront') {
       // 强制刷新整个页面（浏览器刷新）
       window.location.reload()
     }
